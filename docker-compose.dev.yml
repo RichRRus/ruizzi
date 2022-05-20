@@ -1,0 +1,31 @@
+version: '3.4'
+
+services:
+
+    backend:
+        build:
+            context: .
+            target: dev
+        command: python manage.py runserver 0.0.0.0:8000
+        volumes:
+            - ./:/app:cached
+        env_file:
+            - ./.env
+        ports:
+            - "8000:8000"
+
+    database:
+        image: postgres:latest
+        volumes:
+            - database-data:/var/lib/postgresql/data
+        env_file:
+            - ./.env
+        environment:
+            - "POSTGRES_DB=${DATABASE_NAME}"
+            - "POSTGRES_USER=${DATABASE_USER}"
+            - "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
+        ports:
+            - "5432:5432"
+
+volumes:
+    database-data:

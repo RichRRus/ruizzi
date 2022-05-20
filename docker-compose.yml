@@ -1,0 +1,30 @@
+version: '3.4'
+
+services:
+
+    backend:
+        build:
+            context: .
+            target: stage
+        volumes:
+            - ./:/app:cached
+        working_dir: /app
+        env_file:
+            - ./.env
+        ports:
+            - "8000:8000"
+        command: uwsgi --master --http :8000 --module ruizzi.wsgi --workers 2 --threads 2 --harakiri 25 --max-requests 1000 --log-x-forwarded-for --buffer-size 32000
+
+
+    database:
+        image: postgres:latest
+        restart: always
+        ports:
+            - "5432:5432"
+        volumes:
+            - postgres_data:/var/lib/postgresql/data
+        environment:
+            - "POSTGRES_DB=${DATABASE_NAME}"
+            - "POSTGRES_USER=${DATABASE_USER}"
+            - "POSTGRES_PASSWORD=${DATABASE_PASSWORD}"
+        command: --autovacuum=off --fsync=off --synchronous_commit=off --full_page_writes=off --work_mem=12MB --max-connections=10 --max_wal_senders=0
