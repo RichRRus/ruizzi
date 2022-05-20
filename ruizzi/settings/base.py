@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
 
     'advertisement.apps.AdvertisementConfig',
+    'prize.apps.PrizeConfig',
     'user.apps.UserConfig',
 ]
 
