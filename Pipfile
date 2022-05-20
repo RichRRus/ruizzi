@@ -11,6 +11,7 @@ phonenumbers = "*"
 djangorestframework = "*"
 markdown = "*"
 django-filter = "*"
+pillow = "*"
 
 [dev-packages]
 
