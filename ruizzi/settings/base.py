@@ -37,6 +37,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    'phonenumber_field',
+
+    'user.apps.UserConfig',
 ]
 
 MIDDLEWARE = [
@@ -69,6 +73,8 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'ruizzi.wsgi.application'
+
+AUTH_USER_MODEL = 'user.User'
 
 
 # Database
