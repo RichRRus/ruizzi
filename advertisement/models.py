@@ -13,3 +13,17 @@ class Advertisement(models.Model):
 
     def __str__(self):
         return f'Объявление №{self.pk}'
+
+
+class ViewedAd(models.Model):
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, related_name='viewed_ads',
+                             verbose_name='Пользователь')
+    advertisements = models.ManyToManyField('advertisement.Advertisement', related_name='viewed_ads',
+                                            blank=True, verbose_name='Рекламные объявления')
+
+    class Meta:
+        verbose_name = 'Просмотренные рекламные объявления'
+        verbose_name_plural = 'Просмотренные рекламные объявления'
+
+    def __str__(self):
+        return f'Просмотренные рекламные объявления пользователя {self.user}'

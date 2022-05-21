@@ -5,6 +5,7 @@ from django.core.exceptions import ValidationError as DjangoValidationError
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 
+from advertisement.models import ViewedAd
 from user.models import User, UserPoints
 
 
@@ -31,6 +32,9 @@ class UserService:
             user.password = make_password(password)
             user.save()
             UserPoints.objects.create(
+                user=user,
+            )
+            ViewedAd.objects.create(
                 user=user,
             )
         return user
