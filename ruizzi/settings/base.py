@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'advertisement.apps.AdvertisementConfig',
     'prize.apps.PrizeConfig',
     'user.apps.UserConfig',
+
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
@@ -141,3 +143,18 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# REST framework
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+
+# Swagger
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'RUIZZI API',
+    'VERSION': '1.0.0',
+}
