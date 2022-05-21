@@ -178,7 +178,7 @@ SPECTACULAR_SETTINGS = {
     },
     'LICENSE': {
         'name': 'MIT',
-        'url': 'https://opensource.org/licenses/MIT',
+        'url': 'https://github.com/RichRRus/ruizzi/blob/master/LICENSE',
     },
     'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
     'COMPONENT_SPLIT_REQUEST': True,
