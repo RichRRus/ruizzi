@@ -13,6 +13,9 @@ markdown = "*"
 django-filter = "*"
 pillow = "*"
 django-fsm = "*"
+drf-spectacular = "*"
+djangorestframework-simplejwt = "*"
+drf-exceptions-hog = "*"
 
 [dev-packages]
 
