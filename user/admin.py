@@ -2,11 +2,18 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from django.utils.translation import gettext_lazy as _
 
+from advertisement.models import ViewedAd
 from user import models
 
 
 class PointsInline(admin.TabularInline):
     model = models.UserPoints
+    can_delete = False
+    max_num = 1
+
+
+class ViewedAdsInline(admin.TabularInline):
+    model = ViewedAd
     can_delete = False
     max_num = 1
 
@@ -29,4 +36,4 @@ class UserAdmin(BaseUserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    inlines = [PointsInline]
+    inlines = [PointsInline, ViewedAdsInline]
