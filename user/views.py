@@ -1,5 +1,6 @@
 from drf_spectacular.utils import extend_schema_view, extend_schema
 from rest_framework import viewsets, mixins, status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
@@ -22,6 +23,11 @@ from user.services import UserService
         summary='Регистрация пользователя',
         tags=['user'],
     ),
+    get_info=extend_schema(
+        responses=serializers.UserSerializer,
+        summary='Информация о текущем пользователе',
+        tags=['user']
+    )
 )
 class UserViewSet(
     viewsets.GenericViewSet,
@@ -62,3 +68,8 @@ class UserViewSet(
     def perform_create(self, serializer):
         data = serializer.data
         return UserService.create_user(email=data.pop('email'), password=data.pop('password'), **data)
+
+    @action(detail=False, methods=['get'], url_path='me')
+    def get_info(self, request, *args, **kwargs):
+        serializer = self.get_serializer(instance=request.user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
