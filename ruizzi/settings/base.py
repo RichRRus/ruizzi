@@ -156,5 +156,17 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'RUIZZI API',
-    'VERSION': '1.0.0',
+    'CONTACT': {
+        'name': 'Reznikov Roman',
+        'email': 'R1chRus@yandex.ru',
+    },
+    'LICENSE': {
+        'name': 'MIT',
+        'url': 'https://opensource.org/licenses/MIT',
+    },
+    'DEFAULT_GENERATOR_CLASS': 'drf_spectacular.generators.SchemaGenerator',
+    'COMPONENT_SPLIT_REQUEST': True,
+    'SORT_OPERATION_PARAMETERS': True,
+    'COMPONENT_SPLIT_PATCH': False,
+    'GENERIC_ADDITIONAL_PROPERTIES': 'dict',
 }
