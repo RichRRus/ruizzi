@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticated
 
@@ -6,6 +7,28 @@ from advertisement.serializers import AdvertisementSerializer
 from user.permissions import IsAdmin
 
 
+@extend_schema_view(
+    list=extend_schema(
+        summary='Список рекламных объявлений',
+        tags=['advertisement'],
+    ),
+    retrieve=extend_schema(
+        summary='Информация о рекламном объявлении',
+        tags=['advertisement'],
+    ),
+    create=extend_schema(
+        summary='Создание рекламного объявления',
+        tags=['advertisement'],
+    ),
+    update=extend_schema(
+        summary='Редактирование рекламного объявления',
+        tags=['advertisement'],
+    ),
+    destroy=extend_schema(
+        summary='Удаление рекламного объявления',
+        tags=['advertisement'],
+    ),
+)
 class AdvertisementViewSet(viewsets.ModelViewSet):
     queryset = Advertisement.objects.all()
     serializer_class = AdvertisementSerializer
