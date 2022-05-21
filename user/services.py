@@ -11,7 +11,7 @@ class UserService:
     def create_user(*, email: str, password: str, **extra_fields) -> User:
         email = UserManager.normalize_email(email)
         with transaction.atomic():
-            user = User(email=email, **extra_fields)
+            user = User(email=email, username=email, **extra_fields)
             user.password = make_password(password)
             user.save()
             UserPoints.objects.create(
