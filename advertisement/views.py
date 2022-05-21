@@ -20,11 +20,11 @@ from user.permissions import IsAdmin
         summary='Создание рекламного объявления',
         tags=['advertisement'],
     ),
-    put=extend_schema(
+    update=extend_schema(
         summary='Редактирование рекламного объявления',
         tags=['advertisement'],
     ),
-    delete=extend_schema(
+    destroy=extend_schema(
         summary='Удаление рекламного объявления',
         tags=['advertisement'],
     ),
