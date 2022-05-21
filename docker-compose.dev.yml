@@ -13,6 +13,9 @@ services:
             - ./.env
         ports:
             - "8000:8000"
+        entrypoint: ./entrypoint.sh
+        depends_on:
+            - database
 
     database:
         image: postgres:latest
