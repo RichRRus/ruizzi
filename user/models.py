@@ -22,7 +22,7 @@ class User(AbstractUser):
         return full_name.strip()
 
     def __str__(self):
-        return f'{self.get_full_name()} : {self.email}'
+        return f'{str(self.get_full_name())} : {str(self.email)}'
 
 
 class UserPoints(models.Model):
@@ -38,4 +38,4 @@ class UserPoints(models.Model):
         ]
 
     def __str__(self):
-        return self.user
+        return str(self.user)
