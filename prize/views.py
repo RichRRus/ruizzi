@@ -78,6 +78,12 @@ class PrizeViewSet(viewsets.ModelViewSet):
         summary='Завершить заявку',
         tags=['prize-request'],
     ),
+    get_user_requests=extend_schema(
+        request=None,
+        responses=PrizeRequestSerializer(many=True),
+        summary='Список заявок пользователя',
+        tags=['prize-request'],
+    )
 )
 class PrizeRequestViewSet(viewsets.ModelViewSet):
     queryset = PrizeRequest.objects.all()
@@ -86,7 +92,7 @@ class PrizeRequestViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         match self.action:
-            case 'list' | 'retrieve' | 'create':
+            case 'list' | 'retrieve' | 'create' | 'get_user_requests':
                 self.permission_classes = (IsAuthenticated,)
             case _:
                 self.permission_classes = (IsAuthenticated, IsAdmin)
@@ -126,6 +132,17 @@ class PrizeRequestViewSet(viewsets.ModelViewSet):
     def done(self, request, pk=None, *args, **kwargs):
         PrizeRequestService.done_request(request_id=pk)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    @action(detail=False, methods=['get'], url_path='me')
+    def get_user_requests(self, request, *args, **kwargs):
+        queryset = self.get_queryset().filter(user=request.user)
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def perform_create(self, serializer):
         prize_request = PrizeRequestService.create_request(
