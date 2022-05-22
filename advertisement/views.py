@@ -1,9 +1,12 @@
 from drf_spectacular.utils import extend_schema, extend_schema_view
-from rest_framework import viewsets
+from rest_framework import viewsets, status
+from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
 
 from advertisement.models import Advertisement
 from advertisement.serializers import AdvertisementSerializer
+from advertisement.services import AdvertisementService
 from user.permissions import IsAdmin
 
 
@@ -28,6 +31,12 @@ from user.permissions import IsAdmin
         summary='Удаление рекламного объявления',
         tags=['advertisement'],
     ),
+    watch_ad=extend_schema(
+        request=None,
+        responses={204: None},
+        summary='Просмотр рекламы текущим пользователем',
+        tags=['advertisement'],
+    ),
 )
 class AdvertisementViewSet(viewsets.ModelViewSet):
     queryset = Advertisement.objects.all()
@@ -36,7 +45,7 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
 
     def get_permissions(self):
         match self.action:
-            case 'list' | 'retrieve':
+            case 'list' | 'retrieve' | 'watch_ad':
                 self.permission_classes = (IsAuthenticated,)
             case _:
                 self.permission_classes = (IsAuthenticated, IsAdmin)
@@ -47,3 +56,8 @@ class AdvertisementViewSet(viewsets.ModelViewSet):
             return self.queryset
         viewed_ads_id = self.request.user.viewed_ads.first().advertisements.values_list('id')
         return self.queryset.exclude(id__in=viewed_ads_id)
+
+    @action(detail=True, methods=['post'], url_path='watch')
+    def watch_ad(self, request, pk=None, *args, **kwargs):
+        AdvertisementService.watch_ad(user=request.user, ad_id=pk)
+        return Response(status=status.HTTP_204_NO_CONTENT)

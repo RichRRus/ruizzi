@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from phonenumber_field.modelfields import PhoneNumberField
 
+from advertisement.models import ViewedAd
 from user.utils.manager import CustomUserManager
 
 
@@ -40,6 +41,9 @@ class User(AbstractUser):
 
     def get_points(self) -> UserPoints:
         return self.points.first()
+
+    def get_viewed_ads(self) -> ViewedAd:
+        return self.viewed_ads.first()
 
     @property
     def points_amount(self) -> float:
