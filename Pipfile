@@ -16,6 +16,7 @@ django-fsm = "*"
 drf-spectacular = "*"
 djangorestframework-simplejwt = "*"
 drf-exceptions-hog = "*"
+django-cors-headers = "*"
 
 [dev-packages]
 

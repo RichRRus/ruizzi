@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'phonenumber_field',
     'rest_framework',
     'rest_framework_simplejwt',
+    'corsheaders',
 
     'advertisement.apps.AdvertisementConfig',
     'prize.apps.PrizeConfig',
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -82,6 +84,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'ruizzi.wsgi.application'
 
 AUTH_USER_MODEL = 'user.User'
+
+CORS_ALLOW_ALL_ORIGINS = os.getenv('DJANGO_CORS_ALLOW_ALL_ORIGINS', default='False') == 'True'
+CORS_ALLOWED_ORIGINS = os.getenv('DJANGO_CORS_ALLOWED_ORIGINS', default='').split()
+CORS_ALLOW_CREDENTIALS = os.getenv('DJANGO_CORS_ALLOW_CREDENTIALS', default='False') == 'True'
 
 
 # Database
