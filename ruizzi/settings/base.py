@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
+import mimetypes
 import os
 from datetime import timedelta
 from pathlib import Path
@@ -88,6 +89,8 @@ AUTH_USER_MODEL = 'user.User'
 CORS_ALLOW_ALL_ORIGINS = os.getenv('DJANGO_CORS_ALLOW_ALL_ORIGINS', default='False') == 'True'
 CORS_ALLOWED_ORIGINS = os.getenv('DJANGO_CORS_ALLOWED_ORIGINS', default='').split()
 CORS_ALLOW_CREDENTIALS = os.getenv('DJANGO_CORS_ALLOW_CREDENTIALS', default='False') == 'True'
+
+mimetypes.add_type("text/css", ".css", True)
 
 
 # Database
