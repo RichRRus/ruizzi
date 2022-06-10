@@ -28,6 +28,3 @@ FROM builder AS stage
 RUN pip install uwsgi
 
 COPY . .
-
-RUN ./manage.py compilemessages
-RUN ./manage.py collectstatic --noinput
