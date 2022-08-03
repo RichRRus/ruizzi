@@ -1,3 +1,6 @@
+import datetime
+
+from django.db.models import Q
 from drf_spectacular.utils import extend_schema, extend_schema_view
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
@@ -101,7 +104,10 @@ class PrizeRequestViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         if self.request.user.is_admin or self.request.user.is_superuser:
             return self.queryset
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(user=self.request.user).filter(
+            Q(active_up_to__isnull=True) |
+            Q(active_up_to__gte=datetime.datetime.now())
+        )
 
     def get_serializer_class(self):
         match self.action:

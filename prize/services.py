@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import transaction
 from rest_framework.exceptions import ValidationError
 from rest_framework.generics import get_object_or_404
@@ -50,4 +52,8 @@ class PrizeRequestService:
         if prize_request.state != prize_request.StateChoices.PROCESSING:
             raise ValidationError('Заявка не может быть завершена, так как не находится в статусе "В работе".')
         prize_request.state = prize_request.StateChoices.DONE
+
+        if prize_request.prize.time_of_action:
+            prize_request.active_up_to = datetime.datetime.now() + prize_request.prize.time_of_action
+
         prize_request.save()
